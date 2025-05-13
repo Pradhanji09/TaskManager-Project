@@ -10,7 +10,7 @@ const app = express();
 // Connect to Database
 connectDB();
 
-// Middleware
+// Middlewaregit 
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
