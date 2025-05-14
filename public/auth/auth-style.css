@@ -1,0 +1,214 @@
+/* Root variables */
+:root {
+  --primary-color: #2c3e50;
+  --accent-color: #3498db;
+  --light-bg: #ecf0f1;
+  --white: #ffffff;
+  --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(135deg, var(--primary-color), #34495e);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+  margin: 0;
+}
+
+/* Container setup */
+.container {
+  background-color: var(--white);
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  position: relative;
+  overflow: hidden;
+  width: 768px;
+  max-width: 100%;
+  min-height: 480px;
+  transition: transform 0.6s ease-in-out;
+}
+
+/* Form containers */
+.form-container {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transition: all 0.6s ease-in-out;
+}
+
+/* Sign-in form positioning */
+.sign-in-container {
+  left: 0;
+  width: 50%;
+  z-index: 2;
+}
+
+/* Sign-up form positioning */
+.sign-up-container {
+  left: 0;
+  width: 50%;
+  opacity: 0;
+  z-index: 1;
+}
+
+/* Active panel adjustments */
+.container.right-panel-active .sign-in-container {
+  transform: translateX(100%);
+}
+
+.container.right-panel-active .sign-up-container {
+  transform: translateX(100%);
+  opacity: 1;
+  z-index: 5;
+}
+
+/* Form styling */
+.auth-form {
+  background-color: var(--white);
+  display: flex;
+  flex-direction: column;
+  padding: 0 50px;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.auth-form h1 {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.auth-form input {
+  background-color: #eee;
+  border: none;
+  padding: 12px 15px;
+  margin: 8px 0;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.auth-form button {
+  border: none;
+  padding: 12px 45px;
+  background-color: var(--accent-color);
+  color: var(--white);
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.auth-form button:hover {
+  transform: scale(1.05);
+}
+
+/* Overlay container */
+.overlay-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  transition: transform 0.6s ease-in-out;
+  z-index: 100;
+}
+
+/* Overlay */
+.overlay {
+  background: linear-gradient(135deg, var(--accent-color), #34495e);
+  color: var(--white);
+  position: relative;
+  left: -100%;
+  height: 100%;
+  width: 200%;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
+}
+
+/* Active overlay adjustment */
+.container.right-panel-active .overlay-container {
+  transform: translateX(-100%);
+}
+
+.container.right-panel-active .overlay {
+  transform: translateX(50%);
+}
+
+/* Overlay panels */
+.overlay-panel {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 40px;
+  text-align: center;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  transition: transform 0.6s ease-in-out;
+}
+
+.overlay-left {
+  transform: translateX(-20%);
+}
+
+.container.right-panel-active .overlay-left {
+  transform: translateX(0);
+}
+
+.overlay-right {
+  right: 0;
+  transform: translateX(0);
+}
+
+.container.right-panel-active .overlay-right {
+  transform: translateX(20%);
+}
+
+/* Ghost button */
+.ghost {
+  background-color: transparent;
+  border: 2px solid var(--white);
+  color: var(--white);
+  padding: 12px 45px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ghost:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    min-height: 600px;
+  }
+  .overlay-container {
+    display: none;
+  }
+  .sign-in-container,
+  .sign-up-container {
+    width: 100%;
+    position: relative;
+    opacity: 1;
+    z-index: 5;
+  }
+}

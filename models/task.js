@@ -44,4 +44,4 @@ const taskSchema = new Schema(
   }
 );
 
-module.exports = mongoose.model("Todo", taskSchema);
+module.exports = mongoose.model("Task", taskSchema);
