@@ -15,15 +15,52 @@
           <a href="/logout" class="logout-btn">Logout</a>
         </div>
       </header>
+    </div>
 
-      <div class="task-board">
-        <div class="task-column">
-          <div class="task-list" id="taskList">
-            <!-- Tasks will be dynamically added here -->
+    <!-- Modal for New Task -->
+    <div id="newTaskModal" class="modal" style="display: none">
+      <div class="modal-content">
+        <span class="close-btn" id="closeModal">&times;</span>
+        <h2>Add New Task</h2>
+        <form id="newTaskForm" action="/tasks" method="POST">
+          <div class="form-group">
+            <label for="title">Title<span style="color: red">*</span></label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              maxlength="200"
+              required
+            />
           </div>
-        </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea
+              id="description"
+              name="description"
+              maxlength="500"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="dueDate">Due Date</label>
+            <input type="date" id="dueDate" name="dueDate" />
+          </div>
+          <div class="form-group">
+            <label for="priority">Priority</label>
+            <select id="priority" name="priority">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+
+          <button type="submit" class="new-task-btn" style="width: 100%">
+            Add Task
+          </button>
+        </form>
       </div>
     </div>
+
     <script src="/tasks/task.js"></script>
   </body>
 </html>
