@@ -1,8 +1,5 @@
 require("dotenv").config();
-
 const express = require("express");
-const mongoose = require("mongoose");
-const cookieParser = require("cookie-parser");
 const connectDB = require("./config/db");
 
 const app = express();
@@ -10,15 +7,22 @@ const app = express();
 // Connect to Database
 connectDB();
 
-// Middlewaregit 
+// Middleware
+app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+
 app.set("view engine", "ejs");
 
 // Routes
-app.use("/", (req, res) => {
+app.use("/", require("./routes/authRoutes"));
+
+app.get("/", (req, res) => {
   res.render("index");
+});
+
+app.get("/tasks", (req, res) => {
+  res.render("task");
 });
 
 // Server
