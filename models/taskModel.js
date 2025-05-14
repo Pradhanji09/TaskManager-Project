@@ -31,13 +31,6 @@ const taskSchema = new Schema(
       enum: ["low", "medium", "high"],
       default: "medium",
     },
-    tags: [
-      {
-        type: String,
-        trim: true,
-        maxlength: 30,
-      },
-    ],
   },
   {
     timestamps: true,

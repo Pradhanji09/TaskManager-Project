@@ -7,7 +7,7 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Please add a name"],
       trim: true,
-      maxlength: [50, "Name cannot be more than 50 characters"],
+      maxlength: [30, "Name cannot be more than 30 characters"],
     },
     email: {
       type: String,
