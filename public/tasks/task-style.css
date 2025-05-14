@@ -1,88 +1,177 @@
 :root {
-    --primary-color: #2c3e50;
-    --accent-color: #3498db;
-    --light-bg: #ecf0f1;
+  --primary-color: #2c3e50;
+  --accent-color: #3498db;
+  --light-bg: #ecf0f1;
 }
 
 body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: var(--light-bg);
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: var(--light-bg);
 }
 
 .task-manager-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
 }
 
 .task-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    animation: slideDown 0.5s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  animation: slideDown 0.5s ease;
 }
 
 @keyframes slideDown {
-    from { transform: translateY(-50px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .task-title {
-    color: var(--primary-color);
-    font-size: 2.5rem;
-    margin: 0;
+  color: var(--primary-color);
+  font-size: 2.5rem;
+  margin: 0;
 }
 
 .header-controls {
-    display: flex;
-    gap: 1rem;
+  display: flex;
+  gap: 1rem;
 }
 
-.new-task-btn, .logout-btn {
-    padding: 0.8rem 1.5rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+.new-task-btn,
+.logout-btn {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .new-task-btn {
-    background: var(--accent-color);
-    color: white;
+  background: var(--accent-color);
+  color: white;
 }
 
 .logout-btn {
-    background: var(--primary-color);
-    color: white;
-    text-decoration: none;
+  background: var(--primary-color);
+  color: white;
+  text-decoration: none;
 }
 
 .task-board {
-    display: grid;
-    gap: 2rem;
+  display: grid;
+  gap: 2rem;
 }
 
 .task-list {
-    display: grid;
-    gap: 1rem;
+  display: grid;
+  gap: 1rem;
 }
 
 .task-item {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    animation: taskAppear 0.4s ease;
-    transition: transform 0.2s ease;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  animation: taskAppear 0.4s ease;
+  transition: transform 0.2s ease;
 }
 
 @keyframes taskAppear {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .task-item:hover {
-    transform: translateY(-3px);
+  transform: translateY(-3px);
+}
+
+.modal {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(44, 62, 80, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 32px rgba(44, 62, 80, 0.18);
+  min-width: 340px;
+  max-width: 95vw;
+  position: relative;
+  animation: taskAppear 0.3s;
+}
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: var(--accent-color);
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.form-group label {
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 0.7rem 1rem;
+  border: 1px solid #dbe3ea;
+  border-radius: 7px;
+  font-size: 1rem;
+  background: #f8fafc;
+  resize: none;
+}
+
+.form-group textarea {
+  min-height: 60px;
+  max-height: 180px;
 }
