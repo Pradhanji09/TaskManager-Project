@@ -1,19 +1,15 @@
 const express = require("express");
-const {
-  registerUser,
-  loginUser,
-  logoutUser,
-} = require("../controller/authController");
 
+
+const { registerUser, loginUser, logoutUser } = require("../controller/authController");
 const { isAuth } = require("../middlewares/isAuth");
 
 const router = express.Router();
 
-// Public Routes (no authentication needed)
-router.post("/register", registerUser);
-router.post("/login", loginUser);
+// No need to write `isAuth;` alone. Just use it where needed.
 
-// Protected Route (user must be authenticated to log out)
-router.get("/logout", isAuth, logoutUser);
+router.post("/register", registerUser );
+router.post("/login", loginUser );
+router.get("/logout", isAuth , logoutUser); // ✅ Now using isAuth correctly
 
 module.exports = router;

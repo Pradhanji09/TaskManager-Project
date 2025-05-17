@@ -2,7 +2,8 @@
 const express = require("express");
 const router = express.Router();
 const { getTasks } = require("../controller/taskController"); // ✅ Ensure correct path
-const isAuth = require("../middlewares/isAuth"); // ✅ Ensure correct export
+// ✅ Ensure correct export
+const { isAuth } = require("../middlewares/isAuth");
 
 router.get("/tasks", isAuth, getTasks); // ✅ No undefined functions
 
