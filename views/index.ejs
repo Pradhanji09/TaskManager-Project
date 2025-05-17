@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/auth/auth-style.css" />
     <!-- Include GSAP via CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
     <div class="container" id="container">
@@ -25,6 +26,12 @@
             type="password"
             name="password"
             placeholder="Password"
+            required
+          />
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
             required
           />
           <button type="submit">Get Started</button>
