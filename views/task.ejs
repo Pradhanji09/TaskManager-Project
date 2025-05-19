@@ -11,7 +11,7 @@
       <header class="task-header">
         <h1 class="task-title">Welcome, <%= user.name.toUpperCase() %></h1>
         <div class="header-controls">
-          <button class="new-task-btn">+ New Task</button>
+          <button class="new-task-btn">New Task</button>
           <a href="/logout" class="logout-btn">Logout</a>
         </div>
       </header>
@@ -21,14 +21,34 @@
         <% if (tasks.length === 0) { %>
         <p class="no-tasks">No tasks yet. Add one!</p>
         <% } else { %> <% tasks.forEach(task => { %>
-        <div class="task-card" data-id="<%= task._id %>">
+        <div
+          class="task-card <%= task.priority %> <%= task.completed ? 'completed' : '' %>"
+          data-id="<%= task._id %>"
+        >
+          <!-- Complete Button -->
+          <form
+            class="complete-form"
+            action="/tasks/complete/<%= task._id %>"
+            method="POST"
+            onsubmit="return confirm(`Mark task: <%= task.title %> as completed?`)"
+          >
+            <button type="submit" class="complete-btn">✓</button>
+          </form>
+
           <h3><%= task.title %></h3>
+
           <% if (task.description) { %>
           <p><%= task.description %></p>
           <% } %> <% if (task.dueDate) { %>
           <p><strong>Due:</strong> <%= task.dueDate.toDateString() %></p>
           <% } %>
+
           <p><strong>Priority:</strong> <%= task.priority %></p>
+
+          <% if (task.completed) { %>
+          <p class="completed-text">✅ Completed</p>
+          <% } %>
+
           <div class="task-actions">
             <button class="edit-btn">Edit</button>
             <form
@@ -50,12 +70,13 @@
       </section>
     </div>
 
-    <!-- Modal for New Task -->
+    <!-- Modal for New/Edit Task -->
     <div id="newTaskModal" class="modal" style="display: none">
       <div class="modal-content">
         <span class="close-btn" id="closeModal">&times;</span>
-        <h2>Add New Task</h2>
-        <form id="newTaskForm" action="/tasks" method="POST">
+        <h2 id="modalTitle">New Task</h2>
+        <form id="taskForm" method="POST">
+          <input type="hidden" id="taskId" name="taskId" />
           <div class="form-group">
             <label for="title">Title<span style="color: red">*</span></label>
             <input
@@ -81,13 +102,17 @@
           <div class="form-group">
             <label for="priority">Priority</label>
             <select id="priority" name="priority">
-              <option value="low">Low</option>
-              <option value="medium" selected>Medium</option>
-              <option value="high">High</option>
+              <option value="Low">Low</option>
+              <option value="Medium" selected>Medium</option>
+              <option value="High">High</option>
             </select>
           </div>
-
-          <button type="submit" class="new-task-btn" style="width: 100%">
+          <button
+            type="submit"
+            id="submitBtn"
+            class="new-task-btn"
+            style="width: 100%"
+          >
             Add Task
           </button>
         </form>

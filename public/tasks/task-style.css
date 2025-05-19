@@ -1,44 +1,43 @@
+/* Root variables */
 :root {
   --primary-color: #2c3e50;
   --accent-color: #3498db;
   --light-bg: #ecf0f1;
+  --white: #ffffff;
+  --low-priority: #42ba96;
+  --medium-priority: #f4c542;
+  --high-priority: #e74c3c;
+  --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
+/* Base styles */
 body {
   margin: 0;
   font-family: "Segoe UI", sans-serif;
-  background: var(--light-bg);
+  background-color: var(--white);
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
 }
 
 .task-manager-container {
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
+  width: 100%;
+  padding: 1rem 1rem;
 }
 
 .task-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
-  animation: slideDown 0.5s ease;
-}
-
-@keyframes slideDown {
-  from {
-    transform: translateY(-50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  margin-bottom: 1.5rem;
 }
 
 .task-title {
+  font-size: 2.2rem;
+  font-weight: 700;
   color: var(--primary-color);
-  font-size: 2.5rem;
-  margin: 0;
 }
 
 .header-controls {
@@ -48,90 +47,139 @@ body {
 
 .new-task-btn,
 .logout-btn {
-  padding: 0.8rem 1.5rem;
   border: none;
-  border-radius: 8px;
+  padding: 0.9rem 1.6rem;
+  border-radius: 6px;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.new-task-btn {
-  background: var(--accent-color);
-  color: white;
-}
-
-.logout-btn {
-  background: var(--primary-color);
-  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease-in-out;
   text-decoration: none;
 }
 
-.task-board {
-  display: grid;
-  gap: 2rem;
+.new-task-btn {
+  background-color: var(--accent-color);
+  color: var(--white);
+}
+
+.logout-btn {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.new-task-btn:hover {
+  background-color: #2980b9;
+}
+
+.logout-btn:hover {
+  background-color: #34495e;
 }
 
 .task-list {
   display: grid;
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.2rem;
 }
 
-.task-item {
-  background: white;
-  padding: 1.5rem;
+.task-card {
+  background: var(--white);
+  border-left: 6px solid transparent;
   border-radius: 10px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-  animation: taskAppear 0.4s ease;
+  box-shadow: var(--box-shadow);
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
   transition: transform 0.2s ease;
+  font-size: 1rem;
+  line-height: 1.2; /* compact line spacing */
+  position: relative;
+  min-height: 180px;
 }
 
-@keyframes taskAppear {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+.task-card.low {
+  border-left-color: var(--low-priority);
+}
+.task-card.medium {
+  border-left-color: var(--medium-priority);
+}
+.task-card.high {
+  border-left-color: var(--high-priority);
 }
 
-.task-item:hover {
+.task-card:hover {
   transform: translateY(-3px);
 }
 
-.modal {
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(44, 62, 80, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: fadeIn 0.2s;
+.task-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+  font-weight: 600;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.task-card p {
+  margin: 0.3rem 0;
+  color: #444;
+}
+
+.task-actions {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding-top: 0.8rem;
+}
+
+.edit-btn,
+.delete-btn {
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--white);
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.edit-btn {
+  background-color: #1abc9c;
+}
+
+.edit-btn:hover {
+  background-color: #16a085;
+}
+
+.delete-btn {
+  background-color: #c0392b;
+}
+
+.delete-btn:hover {
+  background-color: #a93226;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
 .modal-content {
-  background: #fff;
-  padding: 2rem 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 6px 32px rgba(44, 62, 80, 0.18);
-  min-width: 340px;
-  max-width: 95vw;
+  background-color: var(--white);
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  max-width: 420px;
+  width: 100%;
   position: relative;
-  animation: taskAppear 0.3s;
 }
 
 .close-btn {
@@ -139,9 +187,9 @@ body {
   top: 1rem;
   right: 1rem;
   font-size: 1.5rem;
-  color: #888;
   cursor: pointer;
-  transition: color 0.2s;
+  color: #aaa;
+  transition: color 0.3s ease;
 }
 
 .close-btn:hover {
@@ -149,29 +197,106 @@ body {
 }
 
 .form-group {
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
 }
 
 .form-group label {
-  font-weight: 500;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
   color: var(--primary-color);
 }
 
 .form-group input,
 .form-group textarea,
 .form-group select {
-  padding: 0.7rem 1rem;
-  border: 1px solid #dbe3ea;
-  border-radius: 7px;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
   font-size: 1rem;
-  background: #f8fafc;
-  resize: none;
+  background-color: #fdfdfd;
 }
 
-.form-group textarea {
-  min-height: 60px;
-  max-height: 180px;
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--accent-color);
+  outline: none;
+}
+
+#submitBtn {
+  width: 100%;
+  padding: 0.9rem;
+  background-color: var(--accent-color);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#submitBtn:hover {
+  background-color: #5dade2;
+}
+
+/* Add these styles to your existing CSS */
+
+/* Complete Button Styling */
+.complete-form {
+  position: absolute;
+  top: 0.8rem;
+  right: 0.8rem;
+  margin: 0;
+  z-index: 1;
+}
+
+.complete-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background-color: #2ecc71;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.complete-btn:hover {
+  background-color: #27ae60;
+  transform: scale(1.1);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.complete-btn:active {
+  transform: scale(0.95);
+}
+
+/* Hide complete button on completed tasks */
+.task-card.completed .complete-form {
+  display: none;
+}
+
+/* Add slight padding to task card to accommodate button */
+.task-card {
+  padding-top: 2rem; /* Add more space at the top */
+}
+/* Add to your existing CSS */
+.task-card.completed .task-actions button {
+  opacity: 0.7;
+  background-color: #95a5a6 !important;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.task-card.completed .task-actions button:hover {
+  transform: none;
+  box-shadow: none;
 }

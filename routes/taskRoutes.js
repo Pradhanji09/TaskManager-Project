@@ -5,6 +5,8 @@ const {
   getTasks,
   creatTask,
   deleteTask,
+  editTask,
+  completeTask,
 } = require("../controller/taskController");
 const { isAuth } = require("../middlewares/isAuth");
 
@@ -12,5 +14,7 @@ const { isAuth } = require("../middlewares/isAuth");
 router.get("/tasks", isAuth, getTasks);
 router.post("/tasks", isAuth, creatTask);
 router.post("/tasks/delete/:id", isAuth, deleteTask);
+router.post("/tasks/edit/:id", editTask);
+router.post("/tasks/complete/:id", completeTask);
 
 module.exports = router;
