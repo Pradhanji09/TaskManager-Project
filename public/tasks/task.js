@@ -1,4 +1,7 @@
+import { setupTaskFiltering } from "./filter-search.js";
+
 document.addEventListener("DOMContentLoaded", function () {
+  setupTaskFiltering();
   const modal = document.getElementById("newTaskModal");
   const openBtn = document.querySelector(".new-task-btn");
   const closeBtn = document.getElementById("closeModal");
@@ -9,69 +12,77 @@ document.addEventListener("DOMContentLoaded", function () {
   const dueInput = document.getElementById("dueDate");
   const priorityInput = document.getElementById("priority");
   const taskIdInput = document.getElementById("taskId");
-  taskId;
+
   const modalTitle = document.getElementById("modalTitle");
   const submitBtn = document.getElementById("submitBtn");
 
-  // Handle New Task button
+  // Open New Task Modal
   openBtn.addEventListener("click", () => {
     form.reset();
     form.action = "/tasks";
     taskIdInput.value = "";
     modal.style.display = "flex";
     modalTitle.textContent = "New Task";
+    submitBtn.textContent = "Add Task";
   });
 
-  // Handle modal close
+  // Close Modal
   closeBtn.addEventListener("click", () => {
     modal.style.display = "none";
   });
 
   window.addEventListener("click", (e) => {
-    // Close the modal if the user clicks outside of it
-    // and not on the close button
     if (e.target === modal) {
-      console.log(e.target);
       modal.style.display = "none";
     }
   });
 
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      modal.style.display = "none";
+    }
+  });
+
+  // Edit Task Handler
   document.querySelectorAll(".edit-btn").forEach((button) => {
     button.addEventListener("click", () => {
-      const taskCard = button.closest(".task-card"); // for finding closet task-card class
+      const taskCard = button.closest(".task-card");
+      const taskId = taskCard.dataset.id;
+      const title = taskCard.querySelector("h3").textContent.trim();
 
-      const taskId = taskCard.dataset.id; // Getting current task's ID
+      // Extract description (p without <strong>)
+      const paragraphs = taskCard.querySelectorAll("p");
+      let description = "";
+      paragraphs.forEach((p) => {
+        if (!p.querySelector("strong")) {
+          description = p.textContent.trim();
+        }
+      });
 
-      const title = taskCard.querySelector("h3").textContent.trim(); //Getting title text
-      const description =
-        taskCard.querySelector("p:not(:has(strong))")?.textContent.trim() || ""; // Description in a <p> without <strong> elements
-
+      // Extract due date
       const dueText = taskCard
         .querySelector("p strong")
         ?.nextSibling?.textContent.trim();
 
-      // Text content Due date after a <strong> label
+      // Extract priority
       const priority = taskCard
         .querySelector("p:last-of-type")
         .textContent.split(":")[1]
         .trim()
-        .toLowerCase(); // Priority in the last <p> element
+        .toLowerCase();
 
-      // Set form data
+      // Set form values
       form.action = `/tasks/edit/${taskId}`;
       titleInput.value = title;
       descInput.value = description;
       dueInput.value = dueText
         ? new Date(dueText).toISOString().split("T")[0]
         : "";
-      console.log(new Date(dueText).toISOString().split("T")[0]);
-
       priorityInput.value = priority;
       taskIdInput.value = taskId;
 
+      modalTitle.textContent = "Edit Task";
       submitBtn.textContent = "Save Changes";
-      modalTitle.textContent = "Edit Task"; // <-- Change title here
-
       modal.style.display = "flex";
     });
   });

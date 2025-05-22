@@ -5,11 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Task Board</title>
     <link rel="stylesheet" href="/tasks/task-style.css" />
+    <!-- Add below your existing CSS link -->
   </head>
   <body>
     <div class="task-manager-container">
       <header class="task-header">
         <h1 class="task-title">Welcome, <%= user.name.toUpperCase() %></h1>
+        <!-- Search button -->
+        <div class="filter-search-controls">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search tasks..."
+            class="search-box"
+          />
+
+          <!-- Filter by Priority -->
+          <select id="priorityFilter" class="filter-dropdown">
+            <option value="">All</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
         <div class="header-controls">
           <button class="new-task-btn">New Task</button>
           <a href="/logout" class="logout-btn">Logout</a>
@@ -39,9 +57,19 @@
 
           <% if (task.description) { %>
           <p><%= task.description %></p>
-          <% } %> <% if (task.dueDate) { %>
-          <p><strong>Due:</strong> <%= task.dueDate.toDateString() %></p>
-          <% } %>
+
+          <% if (task.dueDate) { %>
+          <p>
+            <strong>Due:</strong> <%= new Date(task.dueDate).toDateString() %>
+          </p>
+
+          <% if (task.dayDiff > 0) { %>
+          <p><strong>Time Left:</strong> <%= task.dueStatus %></p>
+          <% } else if (task.dayDiff === 0) { %>
+          <p style="color: #f39c12"><strong><%= task.dueStatus %></strong></p>
+          <% } else { %>
+          <p style="color: #e74c3c"><strong><%= task.dueStatus %></strong></p>
+          <% } %> <% } %> <% } %>
 
           <p><strong>Priority:</strong> <%= task.priority %></p>
 
@@ -69,7 +97,6 @@
         <% }); %> <% } %>
       </section>
     </div>
-
     <!-- Modal for New/Edit Task -->
     <div id="newTaskModal" class="modal" style="display: none">
       <div class="modal-content">
@@ -102,9 +129,9 @@
           <div class="form-group">
             <label for="priority">Priority</label>
             <select id="priority" name="priority">
-              <option value="Low">Low</option>
-              <option value="Medium" selected>Medium</option>
-              <option value="High">High</option>
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
             </select>
           </div>
           <button
@@ -119,6 +146,6 @@
       </div>
     </div>
 
-    <script src="/tasks/task.js"></script>
+    <script type="module" src="/tasks/task.js"></script>
   </body>
 </html>

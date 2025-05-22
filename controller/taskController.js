@@ -1,13 +1,43 @@
 const Task = require("../models/taskModel");
 
 // Get all task
+// Get all tasks
 exports.getTasks = async (req, res) => {
   try {
-    // Finding use and sort descending order
     const tasks = await Task.find({ user: req.user._id }).sort({
       createdAt: -1,
     });
-    res.render("task", { tasks, user: req.user });
+
+    const today = new Date();
+
+    const enhancedTasks = tasks.map((task) => {
+      let dayDiff = null;
+      let dueStatus = "";
+
+      if (task.dueDate) {
+        const dueDate = new Date(task.dueDate);
+        const timeDiff = dueDate.getTime() - today.getTime();
+        dayDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+        if (dayDiff > 0) {
+          dueStatus = `${dayDiff} day${dayDiff > 1 ? "s" : ""} left`;
+        } else if (dayDiff === 0) {
+          dueStatus = "Due Today";
+        } else {
+          dueStatus = `Overdue by ${Math.abs(dayDiff)} day${
+            Math.abs(dayDiff) > 1 ? "s" : ""
+          }`;
+        }
+      }
+
+      return {
+        ...task.toObject(),
+        dayDiff,
+        dueStatus,
+      };
+    });
+
+    res.render("task", { tasks: enhancedTasks, user: req.user });
   } catch (error) {
     console.error("Error fetching tasks:", error.message);
     res.status(500).send("Error loading tasks");

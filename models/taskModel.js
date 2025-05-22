@@ -28,8 +28,8 @@ const taskSchema = new Schema(
     dueDate: Date,
     priority: {
       type: String,
-      enum: ["Low", "Medium", "High"],
-      default: "Medium",
+      enum: ["high", "medium", "low"],
+      default: "medium",
     },
   },
   {
