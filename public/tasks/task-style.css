@@ -22,6 +22,25 @@
   }
 }
 
+.overdue-label {
+  color: red;
+  font-weight: bold;
+  margin-left: 8px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .modal-content {
   animation: modalPop 0.35s ease-out;
 }
